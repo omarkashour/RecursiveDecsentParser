@@ -1,0 +1,26 @@
+#include <stdio.h>;
+
+const int maxAttempts = 5;
+var int attempts, score;
+
+function main;
+newb
+    attempts := 0;
+    score := 0;
+    while (attempts < maxAttempts)
+    newb
+        cout << "Enter score for attempt " << attempts + 1 << ": ";
+        cin >> score;
+        if (score >= 50)
+        newb
+            cout << "Pass\n";
+        endb
+        else
+        newb
+            cout << "Fail\n";
+        endb
+        attempts := attempts + 1;
+    endb
+    cout << "All attempts completed.\n";
+endb
+exit
