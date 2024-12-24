@@ -57,19 +57,12 @@ public class Main {
                 nextToken();
                 if (currentToken.getType().equals(Token.LESS)) {
                     nextToken();
-                    while (currentToken.getType().equals(Token.NAME) || currentToken.getType().equals(Token.PERIOD)) {
-                        if (currentToken.getType().equals(Token.GREATER)) {
-                            break;
-                        }
-                        nextToken();
-                    }
+                    file_name();
                     if (currentToken.getType().equals(Token.GREATER)) {
                         nextToken();
                         if (currentToken.getType().equals(Token.SEMICOLON)) {
                             nextToken();
                             lib_decl();
-                        } else {
-                            return;
                         }
                     } else {
                         error(">");
@@ -78,17 +71,47 @@ public class Main {
                     error("<");
                 }
             }
-        } else if (!currentToken.getType().equals(Token.CONST) || !currentToken.getType().equals(Token.VAR)) {
+        } else if (!currentToken.getType().equals(Token.CONST) && !currentToken.getType().equals(Token.VAR)) {
             error("#");
         }
     }
 
-    public static void declarations() {
+    private static void file_name() {
+        while (currentToken.getType().equals(Token.NAME) || currentToken.getType().equals(Token.PERIOD)) {
+            if (currentToken.getType().equals(Token.GREATER)) {
+                break;
+            }
+            nextToken();
+        }
+    }
 
+    public static void declarations() {
+        const_decl();
+        var_decl();
     }
 
     public static void const_decl() {
+        if(currentToken.getType().equals(Token.CONST)) {
+            nextToken();
+            data_type();
+            const_name();
+            if(currentToken.getType().equals(Token.EQUAL)){
+                nextToken();
+                value();
+                if(currentToken.getType().equals(Token.SEMICOLON)){
+                    const_decl();
+                }
+            }
 
+        }else if(!currentToken.getType().equals(Token.VAR) && !currentToken.getType().equals(Token.FUNCTION) && !currentToken.getType().equals(Token.NEWB)) {
+            error("var");
+        }
+    }
+
+    private static void const_name() {
+        while (currentToken.getType().equals(Token.NAME) ) {
+            nextToken();
+        }
     }
 
     public static void var_decl() {
