@@ -7,27 +7,79 @@ public class Main {
     static final String filePath = "./testing.txt";
     static File file;
     static Scanner sc;
-    static String token = "";
+    static Tokenizer tokenizer;
+    static String file_content = "";
+    static Token currentToken;
     public static void main(String[] args) throws FileNotFoundException {
+        readFile();
+        tokenizer = new Tokenizer(file_content);
+        tokenizer.tokenize();
+        for(Token t : tokenizer.tokens){
+            System.out.println(t);
+        }
+        nextToken();
+        lib_decl();
+        declarations();
+        while (!currentToken.equals(Token.NEWB)) {
+            function_decl();
+        }
+        block();
+        if(!currentToken.equals(Token.EXIT)){
+            error("exit");
+        }
+        System.out.println("Parsing completed successfully");
+
+    }
+
+    public static void nextToken() {
+        currentToken = tokenizer.getNextToken();
+    }
+
+    private static void readFile() throws FileNotFoundException {
         file = new File(filePath);
         sc = new Scanner(file);
         while(sc.hasNext()){
-            token = getToken();
-            lib_decl();
-            declarations();
-            function_decl();
-            if(!token.equals("exit")){
-                System.out.println("ERROR AT LINE :" ); // add the error line and token
-            }
-
+            file_content += sc.nextLine() +"\n";
         }
     }
-    public static String getToken(){
-        return sc.next();
-    }
-    public static void lib_decl(){
+    public static void error(String expected){
+        System.out.println("Error: expected token '" + expected + "' but parsed '" + currentToken.getContent() +"'" + " at line " + currentToken.lineNum);
+        System.exit(1);
 
     }
+
+    public static void lib_decl(){
+        if(currentToken.getType().equals(Token.INCLUDE)){
+            nextToken();
+            if(currentToken.getType().equals(Token.LESS)){
+                nextToken();
+                while(currentToken.getType().equals(Token.NAME) || currentToken.getType().equals(Token.PERIOD)) {
+                    if(currentToken.getType().equals(Token.GREATER)){
+                        break;
+                    }
+                    nextToken();
+                }
+                if(currentToken.getType().equals(Token.GREATER)){
+                    nextToken();
+                    if(currentToken.getType().equals(Token.SEMICOLON)){
+                        nextToken();
+                        lib_decl();
+                    }
+                    else{
+                        return;
+                    }
+                }
+                else{
+                    error(">");
+                }
+            }else{
+                error("<");
+            }
+        }else if(!currentToken.getType().equals(Token.CONST) || !currentToken.getType().equals(Token.VAR)){
+            error("include");
+        }
+    }
+
     public static void declarations(){
 
     }
