@@ -21,11 +21,11 @@ public class Main {
         nextToken();
         lib_decl();
         declarations();
-        while (!currentToken.equals(Token.NEWB)) {
+        while (!currentToken.getType().equals(Token.NEWB)) {
             function_decl();
         }
         block();
-        if (!currentToken.equals(Token.EXIT)) {
+        if (!currentToken.getType().equals(Token.EXIT)) {
             error("exit");
         }
         System.out.println("Parsing completed successfully");
