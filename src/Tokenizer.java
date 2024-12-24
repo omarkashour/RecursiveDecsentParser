@@ -85,8 +85,8 @@ public class Tokenizer {
                     tokens.add(new Token(Token.MULTIPLY, "*", lineNum));
                     break;
                 case '#':
-                    index+=8;
-                    tokens.add(new Token(Token.INCLUDE, "include", lineNum));
+                    index++;
+                    tokens.add(new Token(Token.HASHTAG, "#", lineNum));
                     break;
                 case '/':
                     index++;
@@ -208,6 +208,8 @@ public class Tokenizer {
                 return Token.CIN;
             case "call":
                 return Token.CIN;
+            case "include":
+                return Token.INCLUDE;
             default:
                 return null;
         }
