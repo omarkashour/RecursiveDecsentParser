@@ -126,6 +126,10 @@ public class Tokenizer {
                     index++;
                     tokens.add(new Token(Token.RPAREN, ")", lineNum));
                     break;
+                case '"':
+                    index++;
+                    tokens.add(new Token(Token.QUOTE, "\"", lineNum));
+                    break;
                 case '.':
                     index++;
                     tokens.add(new Token(Token.PERIOD, ".", lineNum));

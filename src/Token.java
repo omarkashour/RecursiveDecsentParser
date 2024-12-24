@@ -44,6 +44,7 @@ public class Token {
     public static final String ASSIGN = "ASSIGN";
     public static final String NAME = "NAME";
     public static final String HASHTAG = "HASHTAG";
+    public static final String QUOTE = "QUOTE";
     public static final String EOF = "EOF";
     public static final String INVALID = "INVALID";
 
