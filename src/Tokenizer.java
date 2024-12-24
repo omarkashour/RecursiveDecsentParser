@@ -55,7 +55,7 @@ public class Tokenizer {
                         tokens.add(new Token(Token.LESS_EQUAL, "=<", lineNum));
                     } else if (index < text.length() && text.charAt(index) == '>') {
                         index++;
-                        tokens.add(new Token(Token.GREATER_EQUAL, "=<", lineNum));
+                        tokens.add(new Token(Token.GREATER_EQUAL, "=>", lineNum));
                     } else if (index < text.length() && text.charAt(index) == '!') {
                         index++;
                         tokens.add(new Token(Token.NOT_EQUAL, "=!", lineNum));
