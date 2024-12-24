@@ -207,7 +207,7 @@ public class Tokenizer {
             case "cin":
                 return Token.CIN;
             case "call":
-                return Token.CIN;
+                return Token.CALL;
             case "include":
                 return Token.INCLUDE;
             default:
