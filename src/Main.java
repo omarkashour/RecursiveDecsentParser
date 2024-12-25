@@ -123,31 +123,31 @@ public class Main {
 
 
     public static void var_decl() {
-            if(currentToken.getType().equals(Token.VAR)) {
+        if(currentToken.getType().equals(Token.VAR)) {
+            nextToken();
+            data_type();
+            name_list();
+            if(currentToken.getType().equals(Token.SEMICOLON)){
                 nextToken();
-                data_type();
-                name_list();
-                    if(currentToken.getType().equals(Token.SEMICOLON)){
-                        nextToken();
-                        var_decl();
-                    }
-                    else{
-                        error(";");
-                    }
+                var_decl();
             }
-            else if(!currentToken.getType().equals(Token.FUNCTION) && !currentToken.getType().equals(Token.NEWB)) {
-                error("var or function or newb");
+            else{
+                error(";");
             }
+        }
+        else if(!currentToken.getType().equals(Token.FUNCTION) && !currentToken.getType().equals(Token.NEWB)) {
+            error("var or function or newb");
+        }
     }
 
     public static void name_list() {
-            if (currentToken.getType().equals(Token.NAME)) {
-                nextToken();
-                more_names();
-            }
-            else if (currentToken.getType().equals(Token.SEMICOLON)) {
-                error(";");
-            }
+        if (currentToken.getType().equals(Token.NAME)) {
+            nextToken();
+            more_names();
+        }
+        else if (currentToken.getType().equals(Token.SEMICOLON)) {
+            error(";");
+        }
     }
 
     public static void more_names() {
