@@ -78,5 +78,5 @@ The parser is designed to handle the following grammar productions:
 
 **Usage**
 
-1.  **Create an input file:** Save the code you want to parse to a file named `testing.
+1.  **Create an input file:** Save the code you want to parse to a file named `code.txt`.
 
