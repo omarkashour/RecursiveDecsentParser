@@ -1,3 +1,7 @@
+import com.sun.source.tree.ReturnTree;
+
+import javax.naming.NamingException;
+import javax.print.DocFlavor;
 import java.awt.image.ByteLookupTable;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -121,6 +125,12 @@ public class Main {
         }
     }
 
+    private static void var_name() {
+        while (currentToken.getType().equals(Token.NAME) ) {
+            nextToken();
+        }
+    }
+
 
     public static void var_decl() {
         if(currentToken.getType().equals(Token.VAR)) {
@@ -220,6 +230,9 @@ public class Main {
     }
 
     public static void stmt_list() {
+        if(currentToken.getType().equals(Token.ENDB) || currentToken.getType().equals(Token.UNTIL)) {
+            return;
+        }
         statement();
         if(currentToken.getType().equals(Token.SEMICOLON)){
             nextToken();
@@ -249,71 +262,241 @@ public class Main {
     }
 
     public static void ass_stmt() {
-
+        var_name();
+        if(currentToken.getType().equals(Token.ASSIGN)){
+            nextToken();
+            exp();
+        }
+        else{
+            error(":=");
+        }
     }
 
     public static void exp() {
-
+        term();
+        exp_prime();
     }
 
     public static void exp_prime() {
-
+        if(currentToken.getType().equals(Token.RPAREN) || currentToken.getType().equals(Token.SEMICOLON) || currentToken.getType().equals(Token.ELSE)) {
+            return;
+        }
+        add_oper();
+        term();
+        exp_prime();
     }
 
     public static void term() {
-
+        factor();
+        term_prime();
     }
 
-    public static void term_prime() {
 
+    public static void term_prime() {
+        if(currentToken.getType().equals(Token.MINUS) || currentToken.getType().equals(Token.PLUS) || currentToken.getType().equals(Token.RPAREN) || currentToken.getType().equals(Token.SEMICOLON)) {
+            return;
+        }
+        mul_oper();
+        factor();
+        term_prime();
     }
 
     public static void factor() {
+        if(currentToken.getType().equals(Token.LPAREN)) {
+            nextToken();
+            exp();
+            if(currentToken.getType().equals(Token.RPAREN)) {
+                nextToken();
 
+            }
+        }else if (currentToken.getType().equals(Token.QUOTE)) {
+            nextToken();
+            var_name(); // same as const_name
+            if(currentToken.getType().equals(Token.QUOTE)) {
+                nextToken();
+            }
+        } else if (currentToken.getType().equals(Token.INT) || currentToken.getType().equals(Token.REALVALUE)) {
+            value();
+        }
+        else{
+            error("( or \" or digit");
+        }
     }
 
     public static void add_oper() {
-
+        if(currentToken.getType().equals(Token.PLUS)){
+            nextToken();
+        } else if(currentToken.getType().equals(Token.MINUS)){
+            nextToken();
+        }else {
+            error("+ or -");
+        }
     }
 
     public static void mul_oper() {
-
+        if (currentToken.getType().equals(Token.MULTIPLY)){
+            nextToken();
+        }else if (currentToken.getType().equals(Token.DIVIDE)) {
+            nextToken();
+        }else if (currentToken.getType().equals(Token.MOD)) {
+            nextToken();
+        }else if (currentToken.getType().equals(Token.DIV)){
+            nextToken();
+        }else{
+            error("* or / or mod or div");
+        }
     }
 
     public static void inout_stmt() {
-
+            if(currentToken.getType().equals(Token.CIN)){
+                nextToken();
+                if(currentToken.getType().equals(Token.DOUBLE_GREATER)){
+                    nextToken();
+                    var_name();
+                }else{
+                    error(">>");
+                }
+            } else if (currentToken.getType().equals(Token.COUT)) {
+                nextToken();
+                if(currentToken.getType().equals(Token.DOUBLE_LESS)){
+                    nextToken();
+                    name_value();
+                }
+                else{
+                    error("<<");
+                }
+            }else{
+                error("Cin or Cout");
+            }
     }
 
     public static void if_stmt() {
-
+        if(currentToken.getType().equals(Token.IF)) {
+            nextToken();
+            if(currentToken.getType().equals(Token.LPAREN)) {
+                nextToken();
+                condition();
+                if(currentToken.getType().equals(Token.RPAREN)) {
+                    nextToken();
+                    statement();
+                    else_part();
+                }else{
+                    error(")");
+                }
+            }else{
+                error("(");
+            }
+        }else{
+            error("if");
+        }
     }
 
     public static void else_part() {
-
+        if(currentToken.getType().equals(Token.SEMICOLON)) {
+            return;
+        }
+        if(currentToken.getType().equals(Token.ELSE)) {
+            nextToken();
+            statement();
+        }else{
+            error("else");
+        }
     }
 
     public static void while_stmt() {
-
+        if(currentToken.getType().equals(Token.WHILE)) {
+            nextToken();
+            if(currentToken.getType().equals(Token.LPAREN)) {
+                nextToken();
+                condition();
+                if(currentToken.getType().equals(Token.RPAREN)) {
+                    nextToken();
+                    if(currentToken.getType().equals(Token.NEWB)) {
+                        nextToken();
+                        stmt_list();
+                        if(currentToken.getType().equals(Token.ENDB)) {
+                            nextToken();
+                        }else{
+                            error("endb");
+                        }
+                    }else{
+                        error("newb");
+                    }
+                }else{
+                    error(")");
+                }
+            }else{
+                error("(");
+            }
+        }else{
+            error("while");
+        }
     }
 
     public static void repeat_stmt() {
-
+        if(currentToken.getType().equals(Token.REPEAT)) {
+            nextToken();
+            stmt_list();
+            if(currentToken.getType().equals(Token.UNTIL)) {
+                nextToken();
+                condition();
+            }else {
+                error("until");
+            }
+        }else{
+            error("repeat");
+        }
     }
 
     public static void condition() {
-
+        name_value();
+        relational_oper();
+        name_value();
     }
 
     public static void name_value() {
-
+        if(currentToken.getType().equals(Token.QUOTE)) {
+            nextToken();
+            var_name();
+            if(currentToken.getType().equals(Token.QUOTE)) {
+                nextToken();
+            }else{
+                error("\"");
+            }
+        }else if(currentToken.getType().equals(Token.INT) || currentToken.getType().equals(Token.REALVALUE)) {
+            nextToken();
+            value();
+        }else{
+            error("\" or digit");
+        }
     }
 
     public static void relational_oper() {
-
+        if(currentToken.getType().equals(Token.EQUAL)) {
+            nextToken();
+        }else if(currentToken.getType().equals(Token.NOT_EQUAL)) {
+            nextToken();
+        }else if(currentToken.getType().equals(Token.LESS)) {
+            nextToken();
+        }else if(currentToken.getType().equals(Token.GREATER)) {
+            nextToken();
+        }else if (currentToken.getType().equals(Token.LESS_EQUAL)) {
+            nextToken();
+        }else if(currentToken.getType().equals(Token.GREATER_EQUAL)) {
+            nextToken();
+        }else{
+            error("= or =! or < or =< or > or =>");
+        }
     }
 
     public static void name() {
-
+        if(currentToken.getType().equals(Token.NAME)) {
+            while(currentToken.getType().equals(Token.NAME) || currentToken.getType().equals(Token.INT)) {
+                nextToken();
+            }
+        }else{
+            error("name");
+        }
     }
 
     public static void value() {
@@ -322,6 +505,8 @@ public class Main {
         }
         else if(currentToken.getType().equals(Token.REALVALUE)) {
             real_value();
+        }else{
+            error("not a digit");
         }
     }
 
@@ -329,15 +514,25 @@ public class Main {
             if(currentToken.getType().equals(Token.INT)) {
                 nextToken();
             }
+            else{
+                error("not a digit");
+            }
     }
 
     public static void real_value() {
         if (currentToken.getType().equals(Token.REALVALUE)) {
             nextToken();
+        }else{
+            error("not a digit");
         }
     }
 
     public static void function_call_stmt() {
-
+        if(currentToken.getType().equals(Token.CALL)) {
+            nextToken();
+            function_name();
+        }else{
+            error("call");
+        }
     }
 }
