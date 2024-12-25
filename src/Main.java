@@ -317,15 +317,24 @@ public class Main {
     }
 
     public static void value() {
-
+        if(currentToken.getType().equals(Token.INT)) {
+            integer_value();
+        }
+        else if(currentToken.getType().equals(Token.REALVALUE)) {
+            real_value();
+        }
     }
 
     public static void integer_value() {
-
+            if(currentToken.getType().equals(Token.INT)) {
+                nextToken();
+            }
     }
 
     public static void real_value() {
-
+        if (currentToken.getType().equals(Token.REALVALUE)) {
+            nextToken();
+        }
     }
 
     public static void function_call_stmt() {
