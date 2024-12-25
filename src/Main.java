@@ -29,11 +29,12 @@ public class Main {
         while (!currentToken.getType().equals(Token.NEWB)) {
             function_decl();
         }
+
         block();
         if (!currentToken.getType().equals(Token.EXIT)) {
             error("exit");
         }
-        System.out.println("Parsing completed successfully");
+        System.out.println("Parsing completed successfully with NO syntax errors");
 
     }
 
@@ -184,10 +185,12 @@ public class Main {
         function_heading();
         declarations();
         block();
-        if(!currentToken.getType().equals(Token.SEMICOLON)){
+        if(currentToken.getType().equals(Token.SEMICOLON)){
+            nextToken();
+        }else{
             error(";");
         }
-        nextToken();
+
     }
 
     public static void function_heading() {
@@ -465,7 +468,7 @@ public class Main {
                 error("\"");
             }
         }else if(currentToken.getType().equals(Token.INT) || currentToken.getType().equals(Token.REALVALUE)) {
-            nextToken();
+//            nextToken();
             value();
         }else{
             error("\" or digit");
@@ -507,7 +510,7 @@ public class Main {
         else if(currentToken.getType().equals(Token.REALVALUE)) {
             real_value();
         }else{
-            error("not a digit");
+            error("digit");
         }
     }
 
@@ -516,7 +519,7 @@ public class Main {
                 nextToken();
             }
             else{
-                error("not a digit");
+                error("digit");
             }
     }
 
@@ -524,7 +527,7 @@ public class Main {
         if (currentToken.getType().equals(Token.REALVALUE)) {
             nextToken();
         }else{
-            error("not a digit");
+            error("digit");
         }
     }
 
