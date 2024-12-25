@@ -304,11 +304,17 @@ public class Main {
                 nextToken();
 
             }
+            else{
+                error(")");
+            }
         }else if (currentToken.getType().equals(Token.QUOTE)) {
             nextToken();
             var_name(); // same as const_name
             if(currentToken.getType().equals(Token.QUOTE)) {
                 nextToken();
+            }
+            else{
+                error("\"");
             }
         } else if (currentToken.getType().equals(Token.INT) || currentToken.getType().equals(Token.REALVALUE)) {
             value();

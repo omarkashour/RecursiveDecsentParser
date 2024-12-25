@@ -12,9 +12,9 @@ newb
     y := 20;
     z := "x" + "y";
     cout << "z";
-    if ("x" > "y") z := "x"
+    if ("x" > "y") z := "x";
     else z := "y" - "x";
-    while (z > 0) newb
+    while ("z" > 0) newb
         z := "z" - 1;
     endb;
     repeat
@@ -26,7 +26,7 @@ endb;
 function main;
 newb
     call compute_area;
-    cout << area;
+    cout << "area";
 endb;
 
 exit
