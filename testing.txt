@@ -1,26 +1,32 @@
 #include <stdio.h>;
+#include <math.h>;
+const int MAX = 100;
+const float PI = 3.14;
+var int x, y, z;
+var float radius, area;
 
-const int maxAttempts = 5;
-var int attempts, score;
+function compute_area;
+var int a, b;
+newb
+    x := 10;
+    y := 20;
+    z := x + y;
+    cout << z;
+    if (x > y) z := x - y;
+    else z := y - x;
+    while (z > 0) newb
+        z := z - 1;
+    endb;
+    repeat
+        radius := radius + 1;
+        area := PI * radius * radius;
+    until radius > 10;
+endb;
 
 function main;
 newb
-    attempts := 0;
-    score := 0;
-    while (attempts < maxAttempts)
-    newb
-        cout << "Enter score for attempt " << attempts + 1 << ": ";
-        cin >> score;
-        if (score >= 50)
-        newb
-            cout << "Pass\n";
-        endb
-        else
-        newb
-            cout << "Fail\n";
-        endb
-        attempts := attempts + 1;
-    endb
-    cout << "All attempts completed.\n";
-endb
+    call compute_area;
+    cout << area;
+endb;
+
 exit
