@@ -7,7 +7,7 @@ This repository implements a recursive descent parser in Java based on a provide
 
 The parser is designed to handle the following grammar productions:
 ```
-<program> ::= <lib-decl> <declarations> (<function-decl>)* <block> <exit>
+<program> ::= <lib-decl> <declarations> (<function-decl>)* <block> "exit"
 
 <lib-decl> ::= "#include" "<" <file-name> ">" ";" <lib-decl> | ε
 
