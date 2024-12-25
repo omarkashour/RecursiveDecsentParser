@@ -115,20 +115,14 @@ public class Main {
     }
 
     private static void const_name() {
-        while (currentToken.getType().equals(Token.NAME) ) {
-            nextToken();
-        }
+        name();
     }
     private static void function_name() {
-        while (currentToken.getType().equals(Token.NAME) ) {
-            nextToken();
-        }
+        name();
     }
 
     private static void var_name() {
-        while (currentToken.getType().equals(Token.NAME) ) {
-            nextToken();
-        }
+        name();
     }
 
 
@@ -140,6 +134,7 @@ public class Main {
             if(currentToken.getType().equals(Token.SEMICOLON)){
                 nextToken();
                 var_decl();
+
             }
             else{
                 error(";");
@@ -155,13 +150,13 @@ public class Main {
             nextToken();
             more_names();
         }
-        else if (currentToken.getType().equals(Token.SEMICOLON)) {
+        else if (!currentToken.getType().equals(Token.SEMICOLON)) {
             error(";");
         }
     }
 
     public static void more_names() {
-        if (currentToken.getType().equals(Token.COLON)) {
+        if (currentToken.getType().equals(Token.COMMA)) {
             nextToken();
             name_list();
         }
@@ -244,7 +239,7 @@ public class Main {
         if (currentToken.getType().equals(Token.NAME)) {
             ass_stmt();
         }
-        else if (currentToken.getType().equals(Token.CIN)) {
+        else if (currentToken.getType().equals(Token.CIN) || currentToken.getType().equals(Token.COUT)) {
             inout_stmt();
         }else if (currentToken.getType().equals(Token.IF)) {
             if_stmt();
