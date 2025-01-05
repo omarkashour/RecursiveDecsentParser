@@ -21,6 +21,18 @@ newb
         radius := radius + 1;
         area := PI * radius * radius;
     until radius > 10;
+
+    if(x => 1)
+        if(x => 1)
+            if(x => 1)
+            y := 20;
+            else
+                y := 20;
+    else
+        y := 20;
+    else
+        y := 20;
+
 endb;
 
 function main;

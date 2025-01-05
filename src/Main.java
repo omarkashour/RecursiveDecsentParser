@@ -5,6 +5,7 @@ import javax.print.DocFlavor;
 import java.awt.image.ByteLookupTable;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.sql.SQLOutput;
 import java.util.*;
 
 public class Main {
@@ -376,7 +377,9 @@ public class Main {
                 if(currentToken.getType().equals(Token.RPAREN)) {
                     nextToken();
                     statement();
+                    nextToken();
                     else_part();
+
                 }else{
                     error(")");
                 }
@@ -389,14 +392,9 @@ public class Main {
     }
 
     public static void else_part() {
-        if(currentToken.getType().equals(Token.SEMICOLON)) {
-            return;
-        }
         if(currentToken.getType().equals(Token.ELSE)) {
             nextToken();
             statement();
-        }else{
-            error("else");
         }
     }
 
@@ -455,7 +453,6 @@ public class Main {
         if(currentToken.getType().equals(Token.NAME)) {
             var_name();
         }else if(currentToken.getType().equals(Token.INT) || currentToken.getType().equals(Token.REALVALUE)) {
-//            nextToken();
             value();
         }else{
             error("name or digit");
