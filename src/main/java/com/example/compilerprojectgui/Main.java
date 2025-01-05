@@ -121,7 +121,7 @@ public class Main extends Application {
 		tokensTab.setContent(tokensBP);
 		
 		Scene scene = new Scene(tp, 800, 400);
-		scene.getStylesheets().add(getClass().getResource("/styles/style.css").toExternalForm());
+//		scene.getStylesheets().add(getClass().getResource("/styles/style.css").toExternalForm());
 		primaryStage.setScene(scene);
 		primaryStage.setTitle("1210082 - Omar Kashour - Compiler Project - Recursive Decsent Parser");
 		primaryStage.show();
