@@ -310,20 +310,13 @@ public class Main {
             else{
                 error(")");
             }
-        }else if (currentToken.getType().equals(Token.QUOTE)) {
-            nextToken();
+        }else if (currentToken.getType().equals(Token.NAME)) {
             var_name(); // same as const_name
-            if(currentToken.getType().equals(Token.QUOTE)) {
-                nextToken();
-            }
-            else{
-                error("\"");
-            }
         } else if (currentToken.getType().equals(Token.INT) || currentToken.getType().equals(Token.REALVALUE)) {
             value();
         }
         else{
-            error("( or \" or digit");
+            error("( or name or digit");
         }
     }
 
@@ -459,19 +452,13 @@ public class Main {
     }
 
     public static void name_value() {
-        if(currentToken.getType().equals(Token.QUOTE)) {
-            nextToken();
+        if(currentToken.getType().equals(Token.NAME)) {
             var_name();
-            if(currentToken.getType().equals(Token.QUOTE)) {
-                nextToken();
-            }else{
-                error("\"");
-            }
         }else if(currentToken.getType().equals(Token.INT) || currentToken.getType().equals(Token.REALVALUE)) {
 //            nextToken();
             value();
         }else{
-            error("\" or digit");
+            error("name or digit");
         }
     }
 
