@@ -1,0 +1,51 @@
+#include <stdio.h>;
+#include <math.h>;
+const int MAX = 100.5;
+const float PI = 3.14;
+
+var int x, y, z;
+var float radius, area;
+
+function computeArea;
+var int a, b;
+newb
+    x := 10;
+    y := 20;
+    z := x + y;
+    cout << z;
+
+    while (z > 0) newb
+        z := z - 1;
+    endb;
+    repeat
+        radius := radius + 1;
+        area := PI * radius * radius;
+    until radius > 10;
+
+    if(x => 1)
+        if(x => 1)
+            if(x =< 1)
+                while (z > 0) newb
+                        if(x => 1)
+                    z := z - 1;
+                endb;
+            else
+                y := 20;
+    else
+        y := 20;
+    else
+        y := 20;
+
+endb;
+
+function main;
+newb
+    call computeArea;
+    cout << area;
+endb;
+
+newb
+
+endb
+
+exit
