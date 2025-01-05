@@ -97,7 +97,7 @@ public class Main {
         var_decl();
     }
 
-    public static void const_decl() { // this is correct but its not working yet because "value()" is not implemented yet
+    public static void const_decl() {
         if(currentToken.getType().equals(Token.CONST)) {
             nextToken();
             data_type();
