@@ -80,7 +80,7 @@ public class Parser {
                     error("<");
                 }
             }
-        } else if (!currentToken.getType().equals(Token.CONST) && !currentToken.getType().equals(Token.VAR) && !currentToken.getType().equals(Token.FUNCTION)) {
+        } else if (!currentToken.getType().equals(Token.CONST) && !currentToken.getType().equals(Token.VAR) && !currentToken.getType().equals(Token.FUNCTION) && !currentToken.getType().equals(Token.NEWB)) {
             error("# or const or var or function");
         }
     }
@@ -294,7 +294,7 @@ public class Parser {
 
 
     public static void term_prime() {
-        if(currentToken.getType().equals(Token.MINUS) || currentToken.getType().equals(Token.PLUS) || currentToken.getType().equals(Token.RPAREN) || currentToken.getType().equals(Token.SEMICOLON)) {
+        if(currentToken.getType().equals(Token.ELSE) || currentToken.getType().equals(Token.MINUS)  || currentToken.getType().equals(Token.PLUS) || currentToken.getType().equals(Token.RPAREN) || currentToken.getType().equals(Token.SEMICOLON)) {
             return;
         }
         mul_oper();
@@ -379,7 +379,7 @@ public class Parser {
                 if(currentToken.getType().equals(Token.RPAREN)) {
                     nextToken();
                     statement();
-                    nextToken();
+//                    nextToken(); // semi colon
                     else_part();
 
                 }else{
