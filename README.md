@@ -76,7 +76,9 @@ The parser is designed to handle the following grammar productions:
 <function-call-stmt> ::= "call" <function-name>
 ```
 
-**Usage**
+**Requirements**
 
-1.  **Create an input file:** Save the code you want to parse to a file named `code.txt`.
+1.  **You need to have JavaFX installed in order to run this program, If you are using Intellij IDEA, you can directly clone the repo without having to manually install JavaFX.
+
+
 
