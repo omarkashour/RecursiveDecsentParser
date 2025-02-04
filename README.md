@@ -9,7 +9,7 @@ The parser is designed to handle the following grammar productions:
 ```
 <program> ::= <lib-decl> <declarations> (<function-decl>)* <block> "exit"
 
-<lib-decl> ::= "#include" "<" <file-name> ">" ";" <lib-decl> | ε
+<lib-decl> ::= "#" "include" "<" <file-name> ">" ";" <lib-decl> | ε
 
 <declarations> ::= <const-decl> <var-decl>
 
@@ -53,7 +53,7 @@ The parser is designed to handle the following grammar productions:
 
 <if-stmt> ::= "if" "(" <condition> ")" <statement> <else-part>
 
-<else-part> ::= "else" <statement> | ε
+<else-part> ::= "else" <statement>
 
 <while-stmt> ::= "while" "(" <condition> ")" "{" <stmt-list> "}"
 
@@ -63,7 +63,7 @@ The parser is designed to handle the following grammar productions:
 
 <name-value> ::= <var-name> | <const-name> | <value>
 
-<relational-oper> ::= "=" | "!=" | "<" | "<=" | ">" | ">="
+<relational-oper> ::= "=" | "=!" | "<" | "=<" | ">" | "=>"
 
 <name> ::= <letter> (<letter> | <digit>)*
 
